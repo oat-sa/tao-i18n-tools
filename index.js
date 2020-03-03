@@ -26,20 +26,30 @@ const args = process.argv.slice(2);
 const dirSearchPath = args[0];
 const potFilePath = args[1];
 
-const writeKeysToFile = (text) => {
-    const key = `msgid "${text}"\nmsgstr ""\n`;
+/**
+ * Writes the strings to POT file
+ * @param {string} text
+ * @param {string} fileName
+ */
+const writeStringsToFile = (text, fileName) => {
+    const comment = `# ${fileName}`;
+    const key = `msgid "${text}"\nmsgstr ""`;
 
     fs.readFile(potFilePath, 'utf8').then(data => {
-        if(!data) {
-            return fs.appendFile(potFilePath, key);
-        } else if (data.indexOf(key) === -1) {
-            console.log(`msgid "${key}"`);
-            return fs.appendFile(potFilePath, key);
+        if(!data || data.indexOf(key) === -1) {
+            return fs.appendFile(potFilePath, `${comment}\n${key}\n`);
+        } else {
+            console.log(`String "${text}" already exists, skipping`);
         }
     }).catch(err =>  console.error(err));
 };
 
-const extractStrings = (fileContent) => {
+/**
+ * Searches a svelte file and extracts strings wrapped in `__()` function
+ * @param {string} fileContent
+ * @returns {Promise<any[]>}
+ */
+const extractStrings = (fileContent, fileName) => {
     const re = /<style>(.|\n|\r)*<\/style>/gm;
     const source = fileContent.replace(re, '');
     const ast = svelte.parse(source);
@@ -50,8 +60,9 @@ const extractStrings = (fileContent) => {
             if (node.callee && node.callee.name === '__') {
                 svelte.walk(node, {
                     enter() {
-                        if(node.arguments[0].type === 'Literal') {
-                            promises.push(writeKeysToFile(node.arguments[0].value));
+                        const firstArg = node.arguments[0];
+                        if(firstArg.type === 'Literal') {
+                            promises.push(writeStringsToFile(firstArg.value, fileName));
                         }
                         this.skip();
                     }
@@ -63,11 +74,14 @@ const extractStrings = (fileContent) => {
     return Promise.all(promises);
 };
 
+/**
+ * Accesses the POT file to  write the strings
+ */
 fs.access(potFilePath).catch(() => {
     const dirPath = path.dirname(potFilePath);
 
     /**
-     * Create the file if it doesn't exists
+     * Create the file if it doesn't existss
      */
     console.warn('Provided POT file not found, creating a new one at the given path');
     return fs.mkdir(dirPath, {recursive: true}).then(() => {
@@ -75,13 +89,15 @@ fs.access(potFilePath).catch(() => {
     });
 }).then(() => {
     /**
-     * Going through all the svelte components and extracting strings wrapped in `__()` function
+     * Goes through all the svelte components and extracting strings wrapped in `__()` function
      */
     console.log('POT file found');
     glob(`${dirSearchPath}/**/*.svelte`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
         files.forEach(file => {
+            const fileName = path.basename(file);
+
             fs.readFile(file, 'utf8').then(fileContent => {
-                return extractStrings(fileContent)
+                return extractStrings(fileContent, fileName);
             });
         });
     });
