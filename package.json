@@ -2,9 +2,11 @@
   "name": "tao-i18n-tools",
   "version": "1.0.0",
   "description": "Internationalisation tools for tao",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin" : {
+    "i18n:extract": "node --no-warnings ./tools/extractTranslations.js"
+  },
+  "scripts" : {
+    "i18n:extract": "node --no-warnings ./tools/extractTranslations.js"
   },
   "repository": {
     "type": "git",

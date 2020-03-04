@@ -35,7 +35,7 @@ const potFilePath = args[1];
  * @param {string} fileName
  */
 const writeStringsToFile = (text, fileName) => {
-    const comment = `# ${fileName}`;
+    const comment = `#: ${fileName}`;
     const key = `msgid "${text}"\nmsgstr ""`;
 
     fs.readFile(potFilePath, 'utf8').then(data => {
@@ -77,6 +77,7 @@ const extractStrings = (fileContent, fileName) => {
             if (node.callee && node.callee.name === '__') {
                 svelte.walk(node, {
                     enter() {
+                        console.log(node);
                         const firstArg = node.arguments[0];
                         if(firstArg.type === 'Literal') {
                             promises.push(writeStringsToFile(firstArg.value, fileName));
@@ -92,29 +93,35 @@ const extractStrings = (fileContent, fileName) => {
 };
 
 /**
- * Accesses the POT file to  write the strings
+ * Accesses the POT file to write the strings
  *
  * Create the POT file if it does not exist
  */
-fs.access(potFilePath).catch(() => {
-    const dirPath = path.dirname(potFilePath);
-    console.warn('Provided POT file not found, creating a new one at the given path');
+(function extractTranslations() {
+    if(!dirSearchPath || !potFilePath) {
+        console.error('Please provide source folder to search for strings and a destination POT file.');
+    } else {
+        fs.access(potFilePath).catch(() => {
+            const dirPath = path.dirname(potFilePath);
+            console.warn('Provided POT file not found, creating a new one at the given path');
 
-    // Create the file if it doesn't exist
-    return fs.mkdir(dirPath, {recursive: true}).then(() => {
-        return fs.writeFile(potFilePath, '');
-    });
-}).then(() => {
-    console.log('POT file found');
+            // Create the file if it doesn't exist
+            return fs.mkdir(dirPath, {recursive: true}).then(() => {
+                return fs.writeFile(potFilePath, '');
+            });
+        }).then(() => {
+            console.log('POT file found');
 
-    // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
-    glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
-        files.forEach(file => {
-            const fileName = path.basename(file);
+            // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
+            glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
+                files.forEach(file => {
+                    const fileName = path.basename(file);
 
-            fs.readFile(file, 'utf8').then(fileContent => {
-                return extractStrings(fileContent, fileName);
+                    fs.readFile(file, 'utf8').then(fileContent => {
+                        return extractStrings(fileContent, fileName);
+                    });
+                });
             });
         });
-    });
-});
+    }
+})();
