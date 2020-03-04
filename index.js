@@ -28,6 +28,9 @@ const potFilePath = args[1];
 
 /**
  * Writes the strings to POT file
+ *
+ * Skips the duplicate strings
+ *
  * @param {string} text
  * @param {string} fileName
  */
@@ -45,15 +48,29 @@ const writeStringsToFile = (text, fileName) => {
 };
 
 /**
- * Searches a svelte file and extracts strings wrapped in `__()` function
+ * Converts the file source to AST and extracts strings wrapped in `__()`
+ *
  * @param {string} fileContent
- * @returns {Promise<any[]>}
+ * @param {string} fileName
+ * @returns {Promise<writeStringsToFile[]>}
  */
 const extractStrings = (fileContent, fileName) => {
-    const re = /<style>(.|\n|\r)*<\/style>/gm;
-    const source = fileContent.replace(re, '');
-    const ast = svelte.parse(source);
+    const fileExt = path.extname(fileName);
     const promises = [];
+    let ast;
+
+    /**
+     * Wrap JS file content in a script tag before parsing it because svelte.parse expects a valid svelte component
+     *
+     * If the fileContent is from a svelte component, remove <style> tag before converting to AST because svelte can not parse postCSS
+     */
+    if (fileExt === '.js') {
+        ast = svelte.parse(`<script>${fileContent}</script>`);
+    } else if(fileExt === '.svelte') {
+        const re = /<style>(.|\n|\r)*<\/style>/gm;
+        const source = fileContent.replace(re, '');
+        ast = svelte.parse(source);
+    }
 
     svelte.walk(ast, {
         enter(node) {
@@ -76,23 +93,22 @@ const extractStrings = (fileContent, fileName) => {
 
 /**
  * Accesses the POT file to  write the strings
+ *
+ * Create the POT file if it does not exist
  */
 fs.access(potFilePath).catch(() => {
     const dirPath = path.dirname(potFilePath);
-
-    /**
-     * Create the file if it doesn't existss
-     */
     console.warn('Provided POT file not found, creating a new one at the given path');
+
+    // Create the file if it doesn't exist
     return fs.mkdir(dirPath, {recursive: true}).then(() => {
         return fs.writeFile(potFilePath, '');
     });
 }).then(() => {
-    /**
-     * Goes through all the svelte components and extracting strings wrapped in `__()` function
-     */
     console.log('POT file found');
-    glob(`${dirSearchPath}/**/*.svelte`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
+
+    // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
+    glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
         files.forEach(file => {
             const fileName = path.basename(file);
 
