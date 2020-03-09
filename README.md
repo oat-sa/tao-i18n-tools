@@ -1,11 +1,11 @@
 # tao-i18n-tools
 
-This package is a collection of all thee translations related tools for TAO.
+This package is a collection of all the translations related tools for TAO.
 
 ### installation
 
 ```
-$ npm i taoI18nTools 
+$ npm i -D @oat-sa/taoI18nTools
 ``` 
 
 Following tools are available to be used in this pacakge:

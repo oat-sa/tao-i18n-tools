@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Internationalisation tools for tao",
   "bin": {
-    "i18n:extract": "node --no-warnings ./bin/extractTranslations.js"
+    "i18n:extract": "node ./bin/extractTranslations.js"
   },
   "scripts": {
-    "i18n:extract": "node --no-warnings ./bin/extractTranslations.js"
+    "extract": "node ./bin/extractTranslations.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,6 @@
   },
   "homepage": "https://github.com/oat-sa/tao-i18n-tools#readme",
   "devDependencies": {
-    "glob": "^7.1.6",
-    "jest": "^25.1.0",
-    "svelte": "^3.19.1"
+    "jest": "^25.1.0"
   }
 }

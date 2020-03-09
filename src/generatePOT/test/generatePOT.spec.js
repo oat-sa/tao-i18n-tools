@@ -28,10 +28,6 @@ beforeAll(() => {
     potContent = fs.readFileSync(__dirname + '/dummy.pot', 'utf8');
 });
 
-afterAll(() => {
-    strings = null;
-});
-
 describe('API', () => {
     it('should exist', function() {
         expect(generatePOT).toBeDefined;
@@ -46,6 +42,6 @@ describe('generatePOT', () => {
     it('should return right POT content', function() {
         const generatePotContent = generatePOT(strings);
 
-        expect(generatePotContent).toEqual(potContent);
+        expect(generatePotContent).toMatchSnapshot(potContent);
     });
 });

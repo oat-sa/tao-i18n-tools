@@ -30,7 +30,7 @@ const potFilePath = args[1];
 /**
  * This script Accepts src dir to extract translations and writes the in the dest POT file
  */
-(function extractTranslations() {
+module.exports = function extractTranslations() {
     if(!dirSearchPath || !potFilePath) {
         console.error('Please provide source folder to search for strings and a destination POT file.');
     } else {
@@ -62,4 +62,4 @@ const potFilePath = args[1];
             });
         });
     }
-})();
+};
