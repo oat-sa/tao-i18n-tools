@@ -43,7 +43,7 @@ const potFilePath = args[1];
                 return fs.writeFile(potFilePath, '');
             });
         }).then(() => {
-            console.log('POT file found');
+            console.log('POT file found or created');
 
             // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
             glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
@@ -57,7 +57,7 @@ const potFilePath = args[1];
                     const strings = new Set([].concat(...stringSet));
                     const content = generatePOT(strings);
 
-                    fs.writeFile(potFilePath, content).catch(err =>  console.error(err));
+                    fs.writeFile(potFilePath, content).then(console.log('New Translations added successfully')).catch(err =>  console.error(err));
                 });
             });
         });

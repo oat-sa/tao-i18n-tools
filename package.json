@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Internationalisation tools for tao",
   "bin": {
-    "i18n:extract": "node --no-warnings ./tools/extractTranslations/extractTranslations.js"
+    "i18n:extract": "node --no-warnings ./bin/extractTranslations.js"
   },
   "scripts": {
-    "i18n:extract": "node --no-warnings src/extractMessages/extractTranslations.js"
+    "i18n:extract": "node --no-warnings ./bin/extractTranslations.js"
   },
   "repository": {
     "type": "git",
