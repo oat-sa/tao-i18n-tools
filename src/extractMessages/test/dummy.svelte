@@ -1,7 +1,4 @@
 <script>
-    // Licensed under Gnu Public Licence version 2
-    // Copyright (c) 2019 (original work) Open Assessment Technologies SA ;
-
     const string = __('More dummy strings');
 </script>
 
