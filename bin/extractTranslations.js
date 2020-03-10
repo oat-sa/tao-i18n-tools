@@ -30,36 +30,34 @@ const potFilePath = args[1];
 /**
  * This script Accepts src dir to extract translations and writes the in the dest POT file
  */
-module.exports = function extractTranslations() {
-    if(!dirSearchPath || !potFilePath) {
-        console.error('Please provide source folder to search for strings and a destination POT file.');
-    } else {
-        fs.access(potFilePath).catch(() => {
-            const dirPath = path.dirname(potFilePath);
-            console.warn('Provided POT file not found, creating a new one at the given path');
+if(!dirSearchPath || !potFilePath) {
+    console.error('Please provide source folder to search for strings and a destination POT file.');
+} else {
+    fs.access(potFilePath).catch(() => {
+        const dirPath = path.dirname(potFilePath);
+        console.warn('Provided POT file not found, creating a new one at the given path');
 
-            // Create the file if it doesn't exist
-            return fs.mkdir(dirPath, {recursive: true}).then(() => {
-                return fs.writeFile(potFilePath, '');
-            });
-        }).then(() => {
-            console.log('POT file found or created');
+        // Create the file if it doesn't exist
+        return fs.mkdir(dirPath, {recursive: true}).then(() => {
+            return fs.writeFile(potFilePath, '');
+        });
+    }).then(() => {
+        console.log('POT file found or created');
 
-            // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
-            glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
-                Promise.all(files.map(file => {
-                    const fileName = path.basename(file);
+        // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
+        glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
+            Promise.all(files.map(file => {
+                const fileName = path.basename(file);
 
-                    return fs.readFile(file, 'utf8').then(fileContent => {
-                        return [...extractMessages(fileContent, fileName)];
-                    });
-                })).then((stringSet) => {
-                    const strings = new Set([].concat(...stringSet));
-                    const content = generatePOT(strings);
-
-                    fs.writeFile(potFilePath, content).then(console.log('New Translations added successfully')).catch(err =>  console.error(err));
+                return fs.readFile(file, 'utf8').then(fileContent => {
+                    return [...extractMessages(fileContent, fileName)];
                 });
+            })).then((stringSet) => {
+                const strings = new Set([].concat(...stringSet));
+                const content = generatePOT(strings);
+
+                fs.writeFile(potFilePath, content).then(console.log('New Translations added successfully')).catch(err =>  console.error(err));
             });
         });
-    }
-};
+    });
+}

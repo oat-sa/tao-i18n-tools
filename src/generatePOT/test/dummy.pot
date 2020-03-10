@@ -1,6 +1,0 @@
-msgid "All work is done!"
-msgstr ""
-msgid "You have no more pending tasks for now!"
-msgstr ""
-msgid "Logout"
-msgstr ""

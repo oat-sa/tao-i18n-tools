@@ -18,16 +18,16 @@
  */
 
 const extractMessages = require('../extractMessages.js');
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 let jsFileContent;
 let svelteFileContent;
 
-beforeAll(() => {
-    jsFileContent = fs.readFileSync(path.join(__dirname, 'dummy.js'), 'utf8');
-    svelteFileContent = fs.readFileSync(path.join(__dirname, 'dummy.svelte'), 'utf8');
-});
+beforeAll(() => Promise.all([
+    fs.readFile(path.join(__dirname, 'dummy.js'), 'utf8').then(src => jsFileContent = src),
+    fs.readFile(path.join(__dirname, 'dummy.svelte'), 'utf8').then(src => svelteFileContent = src)
+]));
 
 describe('API', () => {
     it('should exist', function() {
