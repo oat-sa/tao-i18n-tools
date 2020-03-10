@@ -26,38 +26,38 @@ const commander = require('commander');
 
 const program = new commander.Command();
 
-program.version('0.0.1');
 program
-    .option('-s, --source <type>', 'Path of source dir to search for strings to translate')
+    .version('1.0.0')
+    .name('i18n:extract')
+    .description('This command extract translations form source dir to the destination POT file.')
+    .usage('-- [options]');
+
+program
+    .option('-s, --source <type>', 'Path to source dir to search for strings to translate')
     .option('-d, --destination <type>', 'Path to destination POT file')
     .parse(process.argv);
 
-console.log(JSON.stringify(program));
-console.log(program.source);
-console.log(program.destination);
-
-const dirSearchPath = program.source;
-const potFilePath = program.destination;
+const {source, destination} = program;
 
 /**
  * This script Accepts src dir to extract translations and writes the in the dest POT file
  */
-if(!dirSearchPath || !potFilePath) {
+if(!source || !destination) {
     console.error('Please provide source folder to search for strings and a destination POT file.');
 } else {
-    fs.access(potFilePath).catch(() => {
-        const dirPath = path.dirname(potFilePath);
+    fs.access(destination).catch(() => {
+        const dirPath = path.dirname(destination);
         console.warn('Provided POT file not found, creating a new one at the given path');
 
         // Create the file if it doesn't exist
         return fs.mkdir(dirPath, {recursive: true}).then(() => {
-            return fs.writeFile(potFilePath, '');
+            return fs.writeFile(destination, '');
         });
     }).then(() => {
         console.log('POT file found or created');
 
         // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
-        glob(`${dirSearchPath}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
+        glob(`${source}/**/*.{svelte,js}`, {ignore: ["**/node_modules/**", "./node_modules/**"]}, (err, files) => {
             Promise.all(files.map(file => {
                 const fileName = path.basename(file);
 
@@ -68,7 +68,7 @@ if(!dirSearchPath || !potFilePath) {
                 const strings = new Set([].concat(...stringSet));
                 const content = generatePOT(strings);
 
-                fs.writeFile(potFilePath, content).then(console.log('New Translations added successfully')).catch(err =>  console.error(err));
+                fs.writeFile(destination, content).then(console.log('New Translations added successfully')).catch(err =>  console.error(err));
             });
         });
     });
