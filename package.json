@@ -23,6 +23,13 @@
     "url": "https://github.com/oat-sa/tao-i18n-tools/issues"
   },
   "homepage": "https://github.com/oat-sa/tao-i18n-tools#readme",
+  "engines" : {
+    "node" : ">=10.0.0",
+  },
+  "dependencies": {
+    "glob": "^7.1.6",
+    "svelte": "^3.19.1"
+  },
   "devDependencies": {
     "jest": "^25.1.0"
   }

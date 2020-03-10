@@ -39,7 +39,7 @@ describe('API', () => {
     });
 });
 
-describe('extractMessages with JavaScript and Svelte files', () => {
+describe('extractMessages returns right number of messages with JavaScript and Svelte files', () => {
     it('should return a set of stings', function() {
         const strings = extractMessages(jsFileContent, 'dummy.js');
         const strings2 = extractMessages(svelteFileContent, 'dummy.svelte');
@@ -48,15 +48,5 @@ describe('extractMessages with JavaScript and Svelte files', () => {
         expect(strings).toMatchSnapshot();
         expect(strings2).toBeInstanceOf(Set);
         expect(strings2).toMatchSnapshot();
-    });
-
-    it('extractMessages returns right number of messages after parsing files', function() {
-        const strings = extractMessages(jsFileContent, 'dummy.js');
-        const strings2 = extractMessages(svelteFileContent, 'dummy.svelte');
-
-        expect(strings.size).toEqual(2); // Not 3 because duplicate strings are not generated
-        expect(strings.size).toMatchSnapshot();
-        expect(strings2.size).toEqual(4);
-        expect(strings2.size).toMatchSnapshot();
     });
 });
