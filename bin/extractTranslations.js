@@ -17,15 +17,27 @@
  *
  */
 
-const glob = require('glob');
 const extractMessages = require('../src/extractMessages/extractMessages.js');
 const generatePOT = require('../src/generatePOT/generatePOT.js');
+const glob = require('glob');
 const fs = require('fs').promises;
 const path = require('path');
+const commander = require('commander');
 
-const args = process.argv.slice(2);
-const dirSearchPath = args[0];
-const potFilePath = args[1];
+const program = new commander.Command();
+
+program.version('0.0.1');
+program
+    .option('-s, --source <type>', 'Path of source dir to search for strings to translate')
+    .option('-d, --destination <type>', 'Path to destination POT file')
+    .parse(process.argv);
+
+console.log(JSON.stringify(program));
+console.log(program.source);
+console.log(program.destination);
+
+const dirSearchPath = program.source;
+const potFilePath = program.destination;
 
 /**
  * This script Accepts src dir to extract translations and writes the in the dest POT file
