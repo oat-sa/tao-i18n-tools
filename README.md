@@ -26,5 +26,5 @@ The tool also adds a comment above each key giving info about the component it w
 ### Usage
 
 ```
-$ i18n:extract -- -s /path/to/src -d /path/to/tempalte.POT
+$ i18n:extract -s /path/to/src -d /path/to/tempalte.POT
 ```

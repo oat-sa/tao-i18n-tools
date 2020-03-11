@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "Internationalisation tools for tao",
     "bin": {
-        "i18n:extract": "node ./bin/extractTranslations.js"
+        "i18n:extract": "./bin/extractTranslations.js"
     },
     "scripts": {
         "extract": "node ./bin/extractTranslations.js",
