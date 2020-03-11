@@ -24,10 +24,12 @@ const path = require('path');
 let jsFileContent;
 let svelteFileContent;
 
-beforeAll(() => Promise.all([
-    fs.readFile(path.join(__dirname, 'dummy.js'), 'utf8').then(src => jsFileContent = src),
-    fs.readFile(path.join(__dirname, 'dummy.svelte'), 'utf8').then(src => svelteFileContent = src)
-]));
+beforeAll(() =>
+    Promise.all([
+        fs.readFile(path.join(__dirname, 'dummy.js'), 'utf8').then(src => (jsFileContent = src)),
+        fs.readFile(path.join(__dirname, 'dummy.svelte'), 'utf8').then(src => (svelteFileContent = src))
+    ])
+);
 
 describe('API', () => {
     it('should exist', function() {

@@ -27,20 +27,15 @@ const commander = require('commander');
 const program = new commander.Command();
 
 program
-	.version('0.1.0')
-	.name('i18n:extract')
-	.description(
-		'This command extract translations form source dir to the destination POT file.'
-	)
-	.usage('-- [options]');
+    .version('0.1.0')
+    .name('i18n:extract')
+    .description('This command extract translations form source dir to the destination POT file.')
+    .usage('-- [options]');
 
 program
-	.requiredOption(
-		'-s, --source <type>',
-		'Path to source dir to search for strings to translate'
-	)
-	.requiredOption('-d, --destination <type>', 'Path to destination POT file')
-	.parse(process.argv);
+    .requiredOption('-s, --source <type>', 'Path to source dir to search for strings to translate')
+    .requiredOption('-d, --destination <type>', 'Path to destination POT file')
+    .parse(process.argv);
 
 const { source, destination } = program;
 
@@ -48,48 +43,38 @@ const { source, destination } = program;
  * This script Accepts src dir to extract translations and writes the in the dest POT file
  */
 fs.access(destination)
-	.catch(() => {
-		const dirPath = path.dirname(destination);
-		console.warn(
-			'Provided POT file not found, creating a new one at the given path'
-		);
+    .catch(() => {
+        const dirPath = path.dirname(destination);
+        console.warn('Provided POT file not found, creating a new one at the given path');
 
-		// Create the file if it doesn't exist
-		return fs
-			.mkdir(dirPath, { recursive: true })
-			.catch(err => console.error(err));
-	})
-	.then(() => {
-		console.log('POT file found or created');
+        // Create the file if it doesn't exist
+        return fs.mkdir(dirPath, { recursive: true }).catch(err => console.error(err));
+    })
+    .then(() => {
+        console.log('POT file found or created');
 
-		// Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
-		glob(
-			`${source}/**/*.{svelte,js}`,
-			{ ignore: ['**/node_modules/**', './node_modules/**'] },
-			(err, files) => {
-				Promise.all(
-					files.map(file => {
-						const fileName = path.basename(file);
+        // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
+        glob(`${source}/**/*.{svelte,js}`, { ignore: ['**/node_modules/**', './node_modules/**'] }, (err, files) => {
+            Promise.all(
+                files.map(file => {
+                    const fileName = path.basename(file);
 
-						return fs
-							.readFile(file, 'utf8')
-							.then(fileContent => {
-								return [
-									...extractMessages(fileContent, fileName)
-								];
-							})
-							.catch(err => console.error(err));
-					})
-				).then(stringSet => {
-					const strings = new Set([].concat(...stringSet));
-					const content = generatePOT(strings);
+                    return fs
+                        .readFile(file, 'utf8')
+                        .then(fileContent => {
+                            return [...extractMessages(fileContent, fileName)];
+                        })
+                        .catch(err => console.error(err));
+                })
+            ).then(stringSet => {
+                const strings = new Set([].concat(...stringSet));
+                const content = generatePOT(strings);
 
-					fs.writeFile(destination, content)
-						.then(() => {
-							console.log('New Translations added successfully');
-						})
-						.catch(err => console.error(err));
-				});
-			}
-		);
-	});
+                fs.writeFile(destination, content)
+                    .then(() => {
+                        console.log('New Translations added successfully');
+                    })
+                    .catch(err => console.error(err));
+            });
+        });
+    });

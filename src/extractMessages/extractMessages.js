@@ -29,7 +29,7 @@ const path = require('path');
  */
 module.exports = function extractMessages(fileContent, fileName) {
     const fileExt = path.extname(fileName);
-    const strings = new Set;
+    const strings = new Set();
     let ast;
 
     /**
@@ -39,7 +39,7 @@ module.exports = function extractMessages(fileContent, fileName) {
      */
     if (fileExt === '.js') {
         ast = svelte.parse(`<script>${fileContent}</script>`);
-    } else if(fileExt === '.svelte') {
+    } else if (fileExt === '.svelte') {
         const re = /<style>(.|\n|\r)*<\/style>/gm;
         const source = fileContent.replace(re, '');
         ast = svelte.parse(source);
@@ -51,7 +51,7 @@ module.exports = function extractMessages(fileContent, fileName) {
                 svelte.walk(node, {
                     enter() {
                         const firstArg = node.arguments[0];
-                        if(firstArg.type === 'Literal') {
+                        if (firstArg.type === 'Literal') {
                             strings.add(firstArg.value);
                         }
                         this.skip();
