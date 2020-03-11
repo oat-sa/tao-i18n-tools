@@ -1,17 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractMessages with JavaScript and Svelte files extractMessages returns right number of messages after parsing files 1`] = `2`;
-
-exports[`extractMessages with JavaScript and Svelte files extractMessages returns right number of messages after parsing files 2`] = `4`;
-
-exports[`extractMessages with JavaScript and Svelte files should return a set of stings 1`] = `
+exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 1`] = `
 Set {
-  "Some dummy string",
+  "Some dummy © string",
   "duplicate string",
 }
 `;
 
-exports[`extractMessages with JavaScript and Svelte files should return a set of stings 2`] = `
+exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 2`] = `
 Set {
   "All work is done!",
   "You have no more pending tasks for now!",
