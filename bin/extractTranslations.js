@@ -25,11 +25,12 @@ const glob = require('glob');
 const fs = require('fs').promises;
 const path = require('path');
 const commander = require('commander');
+const packageVersion = require('../package.json').version;
 
 const program = new commander.Command();
 
 program
-    .version('0.1.0')
+    .version(packageVersion)
     .name('i18n:extract')
     .description('This command extract translations form source dir to the destination POT file.')
     .usage('-- [options]');
@@ -50,7 +51,7 @@ fs.access(destination)
         console.warn('Provided POT file not found, creating a new one at the given path');
 
         // Create the file if it doesn't exist
-        return fs.mkdir(dirPath, { recursive: true }).catch(err => console.error(err));
+        return fs.mkdir(dirPath, { recursive: true });
     })
     .then(() => {
         console.log('POT file found or created');
@@ -79,4 +80,5 @@ fs.access(destination)
                     .catch(err => console.error(err));
             });
         });
-    });
+    })
+    .catch(err => console.error(err));
