@@ -7,6 +7,7 @@
     },
     "scripts": {
         "extract": "node ./bin/extractTranslations.js",
+        "lint": "eslint -c .eslintrc.js --ext js .",
         "test": "jest"
     },
     "repository": {
@@ -32,7 +33,11 @@
         "svelte": "^3.19.1"
     },
     "devDependencies": {
+        "@oat-sa/eslint-config-tao": "^0.1.0",
         "@oat-sa/prettier-config": "^0.1.1",
+        "eslint": "^6.8.0",
+        "eslint-plugin-jest": "^23.8.2",
+        "eslint-plugin-jsdoc": "^22.0.1",
         "jest": "^25.1.0"
     },
     "prettier": "@oat-sa/prettier-config"

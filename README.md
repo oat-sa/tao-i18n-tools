@@ -1,6 +1,6 @@
 # tao-i18n-tools
 
-This package is a collection of all the translations related tools for TAO.
+This package is a collection of translations related tools for TAO.
 
 ### installation
 
@@ -8,13 +8,13 @@ This package is a collection of all the translations related tools for TAO.
 $ npm i -D @oat-sa/taoI18nTools
 ```
 
-Following tools are available to be used in this pacakge:
+Following tools are available to be used in this package:
 
-## extractTranslations
+## Extract Translations
 
-The Extract Translation tool can be used to parse a given directory and extract all the strings to a POT file.
+The extract translation tool can be used to parse a given directory and extract all the strings to a POT file.
 
-Following formats are supported by the extractTranslations tool at the moment:
+Following formats are supported by the extract translations tool at the moment:
 
 -   `.js`
 -   `.svelte`

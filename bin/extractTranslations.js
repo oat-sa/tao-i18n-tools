@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2020 (original work) Open Assessment Technologies SA
  *
  */
 
@@ -43,7 +45,7 @@ program
 const { source, destination } = program;
 
 /**
- * This script Accepts src dir to extract translations and writes the in the dest POT file
+ * This script accepts src dir to extract translations and writes them in the provided POT file
  */
 fs.access(destination)
     .catch(() => {
@@ -57,7 +59,11 @@ fs.access(destination)
         console.log('POT file found or created');
 
         // Goes through all the svelte and JS files and extracting strings wrapped in `__()` function
-        glob(`${source}/**/*.{svelte,js}`, { ignore: ['**/node_modules/**', './node_modules/**'] }, (err, files) => {
+        glob(`${source}/**/*.{svelte,js}`, { ignore: ['**/node_modules/**', './node_modules/**'] }, (error, files) => {
+            if(error) {
+                console.error(error);
+            }
+
             Promise.all(
                 files.map(file => {
                     const fileName = path.basename(file);

@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2020 (original work) Open Assessment Technologies SA
  *
  */
 
@@ -26,8 +26,8 @@ let svelteFileContent;
 
 beforeAll(() =>
     Promise.all([
-        fs.readFile(path.join(__dirname, 'dummy.js'), 'utf8').then(src => (jsFileContent = src)),
-        fs.readFile(path.join(__dirname, 'dummy.svelte'), 'utf8').then(src => (svelteFileContent = src))
+        fs.readFile(path.join(__dirname, 'data', 'dummy.js'), 'utf8').then(src => (jsFileContent = src)),
+        fs.readFile(path.join(__dirname, 'data', 'dummy.svelte'), 'utf8').then(src => (svelteFileContent = src))
     ])
 );
 
