@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 1`] = `
+Set {
+  "Some dummy © string",
+  "duplicate string",
+}
+`;
+
+exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 2`] = `
+Set {
+  "All work is done!",
+  "You have no more pending tasks for now!",
+  "Logout",
+  "More dummy strings",
+}
+`;
