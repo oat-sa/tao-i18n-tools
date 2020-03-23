@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.1.1] - 23-03-2020
 ### Changed
 
 - Fixed package name in readme and added warning
