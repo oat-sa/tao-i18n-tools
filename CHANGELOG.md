@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-## Changed
+### Changed
 
 - Fixed package name in readme and added warning
 
