@@ -5,7 +5,7 @@ This package is a collection of translations related tools for TAO.
 ### installation
 
 ```
-$ npm i -D @oat-sa/taoI18nTools
+$ npm i -D @oat-sa/tao-i18n-tools
 ```
 
 Following tools are available to be used in this package:
@@ -26,5 +26,7 @@ The tool also adds a comment above each key giving info about the component it w
 ### Usage
 
 ```
-$ i18n:extract -s /path/to/src -d /path/to/tempalte.POT
+$ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 ```
+
+> :warning: **Relative paths are not supported**: please use absolute path for source and destination argument. 
