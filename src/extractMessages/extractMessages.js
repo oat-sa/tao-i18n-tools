@@ -29,7 +29,7 @@ const path = require('path');
  */
 module.exports = function extractMessages(fileContent, fileName) {
     const fileExt = path.extname(fileName);
-    const strings = new Set();
+    const strings = new Map();
     let ast;
 
     /**
@@ -50,9 +50,13 @@ module.exports = function extractMessages(fileContent, fileName) {
             if (node.callee && node.callee.name === '__') {
                 svelte.walk(node, {
                     enter() {
-                        const firstArg = node.arguments[0];
-                        if (firstArg.type === 'Literal') {
-                            strings.add(firstArg.value);
+                        const { type, value } = node.arguments[0];
+                        if (type === 'Literal') {
+                            const context = {
+                                file: fileName,
+                                line: node.loc.start.line
+                            };
+                            strings.set(value, [...(strings.get(value) || []), context]);
                         }
                         this.skip();
                     }
