@@ -36,7 +36,7 @@ module.exports = (options = {}) => {
                 (options.include.some(pattern => minimatch(id, pattern)) ||
                     !options.exclude.some(pattern => minimatch(id, pattern)))
             ) {
-                extractMessages(source, id).forEach((context, message) => {
+                extractMessages(source, id, path.dirname(options.output)).forEach((context, message) => {
                     messages.set(message, [...(messages.get(message) || []), ...context]);
                 });
             }
