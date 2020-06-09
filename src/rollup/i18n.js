@@ -20,7 +20,7 @@ const path = require('path');
 const fs = require('fs');
 const minimatch = require('minimatch');
 const extractMessages = require('../extractMessages/extractMessages');
-const generatePOT = require('../generatePot/generatePOT');
+const generatePOT = require('../generatePOT/generatePOT');
 
 module.exports = (options = {}) => {
     if (typeof options.output !== 'string') {
