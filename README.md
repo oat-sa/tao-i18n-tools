@@ -2,7 +2,7 @@
 
 This package is a collection of translations related tools for TAO.
 
-### installation
+### Installation
 
 ```
 $ npm i -D @oat-sa/tao-i18n-tools
@@ -30,3 +30,20 @@ $ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 ```
 
 > :warning: **Relative paths are not supported**: please use absolute path for source and destination argument. 
+
+## Rollup plugin
+
+```js
+import path from 'path';
+import i18n from '@oat-sa/tao-i18n-tools/src/rollup/i18n';
+
+export default {
+    plugins: [
+        i18n({
+            exclude: ['**/node_modules/**'],
+            include: ['**/@oat-sa-private/**', '**/@oat-sa/**'],
+            output: path.join(srcDir, 'locales', 'messages.pot')
+        })
+    ]
+}
+```
