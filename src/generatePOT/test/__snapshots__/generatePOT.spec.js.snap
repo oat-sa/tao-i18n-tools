@@ -1,10 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generatePOT should return right POT content 1`] = `
-"msgid \\"All work is done!\\"
+"#: index.js:13
+msgid \\"All work is done!\\"
 msgstr \\"\\"
+#: ../src/controller/runner.js:31 ../src/controller/runner.js:45
 msgid \\"You have no more pending tasks for now!\\"
 msgstr \\"\\"
+#: ../../src/bootstrap.js:22
 msgid \\"Logout\\"
 msgstr \\"\\"
 "

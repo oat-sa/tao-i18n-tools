@@ -26,10 +26,9 @@ module.exports = function generatePOT(strings) {
     let potContent = '';
 
     strings.forEach((contexts, string) => {
-        const messageContext = contexts.map(context => `file://${context.file}#${context.line}`).join(' ');
-        const key = `msgctxt "${messageContext}"\nmsgid "${string}"\nmsgstr ""`;
+        const messageContext = contexts.map(context => `${context.file}:${context.line}`).join(' ');
 
-        potContent = potContent + `${key}\n`;
+        potContent += `#: ${messageContext}\nmsgid "${string}"\nmsgstr ""\n`;
     });
 
     return potContent;
