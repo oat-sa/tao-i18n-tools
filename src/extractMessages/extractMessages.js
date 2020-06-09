@@ -27,7 +27,7 @@ const path = require('path');
  * @param fileName - Name of the file
  * @returns {Set<string>}
  */
-module.exports = function extractMessages(fileContent, fileName) {
+module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
     const strings = new Map();
     let ast;
@@ -40,8 +40,14 @@ module.exports = function extractMessages(fileContent, fileName) {
     if (fileExt === '.js') {
         ast = svelte.parse(`<script>${fileContent}</script>`);
     } else if (fileExt === '.svelte') {
+        /**
+         * Style tag should be removed, because it can contain scss or postcss, what cannot be parsed without extra plugin
+         * But the lines should be kept to do not modify the sourcemap
+         */
         const re = /<style>(.|\n|\r)*<\/style>/gm;
-        const source = fileContent.replace(re, '');
+        const styleTag = fileContent.match(re);
+        const removedLines = styleTag ? styleTag[0].split('\n').length : 0;
+        const source = fileContent.replace(re, new Array(removedLines).join('\n'));
         ast = svelte.parse(source);
     }
 
@@ -53,7 +59,7 @@ module.exports = function extractMessages(fileContent, fileName) {
                         const { type, value } = node.arguments[0];
                         if (type === 'Literal') {
                             const context = {
-                                file: fileName,
+                                file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
                                 line: node.loc.start.line
                             };
                             strings.set(value, [...(strings.get(value) || []), context]);

@@ -46,9 +46,9 @@ describe('extractMessages returns right number of messages with JavaScript and S
         const strings = extractMessages(jsFileContent, 'dummy.js');
         const strings2 = extractMessages(svelteFileContent, 'dummy.svelte');
 
-        expect(strings).toBeInstanceOf(Set);
+        expect(strings).toBeInstanceOf(Map);
         expect(strings).toMatchSnapshot();
-        expect(strings2).toBeInstanceOf(Set);
+        expect(strings2).toBeInstanceOf(Map);
         expect(strings2).toMatchSnapshot();
     });
 });
