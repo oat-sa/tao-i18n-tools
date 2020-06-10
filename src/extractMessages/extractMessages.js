@@ -25,7 +25,7 @@ const path = require('path');
  *
  * @param fileContent - source code of the file
  * @param fileName - Name of the file
- * @returns {Set<string>}
+ * @returns {Map<string>}
  */
 module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
