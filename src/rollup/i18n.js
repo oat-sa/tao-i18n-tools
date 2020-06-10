@@ -37,13 +37,30 @@ module.exports = (options = {}) => {
                     !options.exclude.some(pattern => minimatch(id, pattern)))
             ) {
                 extractMessages(source, id, path.dirname(options.output)).forEach((context, message) => {
-                    messages.set(message, [...(messages.get(message) || []), ...context]);
+                    const contexts = [...(messages.get(message) || []), ...context];
+                    // sort the context to have the same order everytime
+                    messages.set(
+                        message,
+                        contexts.sort((a, b) => {
+                            if (a.file > b.file) {
+                                return 1;
+                            }
+
+                            if (a.file < b.file) {
+                                return -1;
+                            }
+
+                            return a.line > b.line ? 1 : 0;
+                        })
+                    );
                 });
             }
             return null;
         },
         buildEnd() {
-            return fs.promises.writeFile(options.output, generatePOT(messages));
+            // sort the messages to have the same order everytime
+            const sortedMessages = new Map([...messages].sort());
+            return fs.promises.writeFile(options.output, generatePOT(sortedMessages));
         }
     };
 };
