@@ -24,7 +24,7 @@ const generatePOT = require('../generatePOT/generatePOT');
 
 module.exports = (options = {}) => {
     if (typeof options.output !== 'string') {
-        throw new Error('"output" have to be defined');
+        throw new Error('"output" has to be defined');
     }
     options = Object.assign({ exclude: [], include: [] }, options);
     const messages = new Map();
