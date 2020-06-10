@@ -21,6 +21,8 @@
  * Writes the strings to POT file
  *
  * Skips the duplicate strings
+ * @param {Map<string, Object[]}
+ * @returns {string}
  */
 module.exports = function generatePOT(strings) {
     let potContent = '';

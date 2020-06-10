@@ -23,9 +23,10 @@ const path = require('path');
 /**
  * Converts the given source code into AST and returns with a set of strings wrapped in `__()`
  *
- * @param fileContent - source code of the file
- * @param fileName - Name of the file
- * @returns {Map<string>}
+ * @param {string} fileContent - source code of the file
+ * @param {string} fileName - Name of the file
+ * @param {string} [relativeTo] - File context will be relative to this path
+ * @returns {Map<string, Object[]>}
  */
 module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
