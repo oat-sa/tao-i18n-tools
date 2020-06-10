@@ -26,27 +26,24 @@ beforeAll(() => {
         ['All work is done!', [{ file: 'index.js', line: 13 }]],
         [
             'You have no more pending tasks for now!',
-            [
-                { file: '../src/controller/runner.js', line: 31 },
-                { file: '../src/controller/runner.js', line: 45 }
-            ]
+            [{ file: '../src/controller/runner.js', line: 31 }, { file: '../src/controller/runner.js', line: 45 }]
         ],
         ['Logout', [{ file: '../../src/bootstrap.js', line: 22 }]]
     ]);
 });
 
 describe('API', () => {
-    it('should exist', function () {
+    it('should exist', function() {
         expect(generatePOT).toBeDefined;
     });
 
-    it('should be a function', function () {
+    it('should be a function', function() {
         expect(generatePOT).toBeInstanceOf(Function);
     });
 });
 
 describe('generatePOT', () => {
-    it('should return right POT content', function () {
+    it('should return right POT content', function() {
         const generatePotContent = generatePOT(strings);
 
         expect(generatePotContent).toMatchSnapshot();

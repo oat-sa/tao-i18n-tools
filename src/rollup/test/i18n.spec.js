@@ -39,7 +39,7 @@ const generatePOT = require('../../generatePOT/generatePOT');
 const fs = require('fs');
 
 describe('i18n rollup API', () => {
-    it('should exist', function () {
+    it('should exist', function() {
         expect(i18n).toBeDefined;
     });
 
@@ -48,24 +48,24 @@ describe('i18n rollup API', () => {
     });
 
     it('should have name', () => {
-        expect(typeof i18n({output: ''}).name).toBe('string');
+        expect(typeof i18n({ output: '' }).name).toBe('string');
     });
 });
 
 describe('i18n', () => {
     it('calls extractMessages and generatePOT with correct parameters', () => {
         const output = '/src/locale/messages.pot';
-        const instance = i18n({output});
+        const instance = i18n({ output });
         const source = 'abc';
         const id = '/src/index.js';
 
         // extract messages
-        expect(instance.transform(source, id)).toBe(source);
+        expect(instance.transform(source, id)).toBe(null);
         expect(extractMessages).toHaveBeenCalledWith(source, id, '/src/locale');
 
         // generate POT
         expect(instance.buildEnd()).toBeInstanceOf(Promise);
-        expect(generatePOT.mock.calls[0][0].get('hello')).toMatchObject([{'file': "index.js", "line": 23}]);
+        expect(generatePOT.mock.calls[0][0].get('hello')).toMatchObject([{ file: 'index.js', line: 23 }]);
 
         // write to disk
         expect(fs.promises.writeFile).toHaveBeenCalledWith(output, 'POT content');

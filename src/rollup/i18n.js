@@ -40,7 +40,7 @@ module.exports = (options = {}) => {
                     messages.set(message, [...(messages.get(message) || []), ...context]);
                 });
             }
-            return source;
+            return null;
         },
         buildEnd() {
             return fs.promises.writeFile(options.output, generatePOT(messages));
