@@ -58,12 +58,17 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                 svelte.walk(node, {
                     enter() {
                         const { type, value } = node.arguments[0];
+                        const context = {
+                            file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
+                            line: node.loc.start.line
+                        };
                         if (type === 'Literal') {
-                            const context = {
-                                file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
-                                line: node.loc.start.line
-                            };
                             strings.set(value, [...(strings.get(value) || []), context]);
+                        } else {
+                            /* eslint-disable no-console */
+                            console.warn(
+                                `__ was called with untranslatable non literal parameter at ${context.file}:${context.line}`
+                            );
                         }
                         this.skip();
                     }
