@@ -29,7 +29,7 @@ The tool also adds a comment above each key giving info about the component it w
 $ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 ```
 
-> :warning: **Relative paths are not supported**: please use absolute path for source and destination argument. 
+> :warning: **Relative paths are not supported**: please use absolute path for source and destination argument.
 
 ## Rollup plugin
 
@@ -43,7 +43,10 @@ export default {
             exclude: ['**/node_modules/**'],
             include: ['**/@oat-sa-private/**', '**/@oat-sa/**'],
             output: path.join(srcDir, 'locales', 'messages.pot')
-        })
+        }),
+        // i18n plugin should be above any code transform plugin like babel or svelte
+        svelte(),
+        babel()
     ]
-}
+};
 ```
