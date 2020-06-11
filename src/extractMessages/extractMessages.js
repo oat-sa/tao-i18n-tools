@@ -67,7 +67,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                         } else {
                             /* eslint-disable no-console */
                             console.warn(
-                                `__ was called with unextractable non literal parameter at ${context.file}:${context.line}`
+                                `__ was called with an unextractable non literal parameter at ${context.file}:${context.line}`
                             );
                         }
                         this.skip();
