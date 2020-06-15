@@ -23,13 +23,14 @@ const path = require('path');
 /**
  * Converts the given source code into AST and returns with a set of strings wrapped in `__()`
  *
- * @param fileContent - source code of the file
- * @param fileName - Name of the file
- * @returns {Set<string>}
+ * @param {string} fileContent - source code of the file
+ * @param {string} fileName - Name of the file
+ * @param {string} [relativeTo] - File context will be relative to this path
+ * @returns {Map<string, Object[]>}
  */
-module.exports = function extractMessages(fileContent, fileName) {
+module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
-    const strings = new Set();
+    const strings = new Map();
     let ast;
 
     /**
@@ -40,8 +41,14 @@ module.exports = function extractMessages(fileContent, fileName) {
     if (fileExt === '.js') {
         ast = svelte.parse(`<script>${fileContent}</script>`);
     } else if (fileExt === '.svelte') {
+        /**
+         * Style tag should be removed, because it can contain scss or postcss, what cannot be parsed without extra plugin
+         * But the lines should be kept to do not modify the sourcemap
+         */
         const re = /<style>(.|\n|\r)*<\/style>/gm;
-        const source = fileContent.replace(re, '');
+        const styleTag = fileContent.match(re);
+        const removedLines = styleTag ? styleTag[0].split('\n').length : 0;
+        const source = fileContent.replace(re, new Array(removedLines).join('\n'));
         ast = svelte.parse(source);
     }
 
@@ -50,9 +57,18 @@ module.exports = function extractMessages(fileContent, fileName) {
             if (node.callee && node.callee.name === '__') {
                 svelte.walk(node, {
                     enter() {
-                        const firstArg = node.arguments[0];
-                        if (firstArg.type === 'Literal') {
-                            strings.add(firstArg.value);
+                        const { type, value } = node.arguments[0];
+                        const context = {
+                            file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
+                            line: node.loc.start.line
+                        };
+                        if (type === 'Literal') {
+                            strings.set(value, [...(strings.get(value) || []), context]);
+                        } else {
+                            /* eslint-disable no-console */
+                            console.warn(
+                                `__ was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                            );
                         }
                         this.skip();
                     }

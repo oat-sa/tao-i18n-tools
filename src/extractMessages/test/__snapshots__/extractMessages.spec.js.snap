@@ -1,17 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 1`] = `
-Set {
-  "Some dummy © string",
-  "duplicate string",
+Map {
+  "Some dummy © string" => Array [
+    Object {
+      "file": "dummy.js",
+      "line": 3,
+    },
+  ],
+  "duplicate string" => Array [
+    Object {
+      "file": "dummy.js",
+      "line": 4,
+    },
+    Object {
+      "file": "dummy.js",
+      "line": 5,
+    },
+  ],
 }
 `;
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 2`] = `
-Set {
-  "All work is done!",
-  "You have no more pending tasks for now!",
-  "Logout",
-  "More dummy strings",
+Map {
+  "All work is done!" => Array [
+    Object {
+      "file": "dummy.svelte",
+      "line": 28,
+    },
+  ],
+  "You have no more pending tasks for now!" => Array [
+    Object {
+      "file": "dummy.svelte",
+      "line": 29,
+    },
+  ],
+  "Logout" => Array [
+    Object {
+      "file": "dummy.svelte",
+      "line": 30,
+    },
+  ],
+  "More dummy strings" => Array [
+    Object {
+      "file": "dummy.svelte",
+      "line": 2,
+    },
+  ],
 }
 `;
