@@ -1,6 +1,6 @@
 {
     "name": "@oat-sa/tao-i18n-tools",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Internationalisation tools for tao",
     "bin": {
         "i18n:extract": "./bin/extractTranslations.js"
@@ -30,7 +30,8 @@
     "dependencies": {
         "commander": "^4.1.1",
         "glob": "^7.1.6",
-        "svelte": "^3.19.1"
+        "minimatch": "^3.0.4",
+        "svelte": "^3.23.1"
     },
     "devDependencies": {
         "@oat-sa/eslint-config-tao": "^0.1.0",

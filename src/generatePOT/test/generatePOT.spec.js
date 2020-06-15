@@ -22,7 +22,14 @@ const generatePOT = require('../generatePOT.js');
 let strings;
 
 beforeAll(() => {
-    strings = new Set(['All work is done!', 'You have no more pending tasks for now!', 'Logout']);
+    strings = new Map([
+        ['All work is done!', [{ file: 'index.js', line: 13 }]],
+        [
+            'You have no more pending tasks for now!',
+            [{ file: '../src/controller/runner.js', line: 31 }, { file: '../src/controller/runner.js', line: 45 }]
+        ],
+        ['Logout', [{ file: '../../src/bootstrap.js', line: 22 }]]
+    ]);
 });
 
 describe('API', () => {
