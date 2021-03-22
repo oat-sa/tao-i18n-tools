@@ -42,13 +42,22 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
         ast = svelte.parse(`<script>${fileContent}</script>`);
     } else if (fileExt === '.svelte') {
         /**
-         * Style tag should be removed, because it can contain scss or postcss, what cannot be parsed without extra plugin
-         * But the lines should be kept to do not modify the sourcemap
+         * Style tag should be removed, because it can contain scss or postcss, what cannot be parsed without extra plugin.
+         * Any <svelte:head> wrapping a <style> must also be removed _first_.
+         * The lines should be kept so that we do not modify the sourcemap.
          */
-        const re = /<style>(.|\n|\r)*<\/style>/gm;
-        const styleTag = fileContent.match(re);
-        const removedLines = styleTag ? styleTag[0].split('\n').length : 0;
-        const source = fileContent.replace(re, new Array(removedLines).join('\n'));
+        let source = fileContent;
+
+        const ignoreRegexes = [
+            /<svelte:head+>(.|\n|\r)*<\/svelte:head+>/gm,
+            /<style>(.|\n|\r)*<\/style>/gm
+        ];
+        ignoreRegexes.forEach(re => {
+            const block = source.match(re);
+            const removedLines = block ? block[0].split('\n').length : 0;
+            source = source.replace(re, new Array(removedLines).join('\n'));
+        });
+
         ast = svelte.parse(source);
     }
 
