@@ -1,6 +1,6 @@
 {
     "name": "@oat-sa/tao-i18n-tools",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Internationalisation tools for tao",
     "bin": {
         "i18n:extract": "./bin/extractTranslations.js"
@@ -18,7 +18,9 @@
         "tao",
         "i18n"
     ],
-    "author": "Anshul Sharma",
+    "author": {
+        "name": "Anshul Sharma"
+    },
     "license": "GPL-2.0",
     "bugs": {
         "url": "https://github.com/oat-sa/tao-i18n-tools/issues"
