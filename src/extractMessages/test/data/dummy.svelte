@@ -30,3 +30,15 @@
         <button label={__('Logout')} />
     </section>
 </div>
+
+<svelte:window on:focus={() => {}} />
+
+<svelte:head>
+    <style>
+        p {
+            color: red;
+        }
+    </style>
+</svelte:head>
+
+<svelte:body on:blur={() => {}} />
