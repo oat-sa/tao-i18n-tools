@@ -18,6 +18,12 @@ Map {
       "line": 5,
     },
   ],
+  "Plural form string" => Array [
+    Object {
+      "file": "dummy.js",
+      "line": 6,
+    },
+  ],
 }
 `;
 
@@ -39,6 +45,12 @@ Map {
     Object {
       "file": "dummy.svelte",
       "line": 30,
+    },
+  ],
+  "Plural translation" => Array [
+    Object {
+      "file": "dummy.svelte",
+      "line": 31,
     },
   ],
   "More dummy strings" => Array [

@@ -28,6 +28,7 @@
         <h5>{__('All work is done!')}</h5>
         <p>{__('You have no more pending tasks for now!')}</p>
         <button label={__('Logout')} />
+        <span>{__.tc('Plural translation')}</span>
     </section>
 </div>
 

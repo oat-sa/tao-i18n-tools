@@ -21,6 +21,17 @@ const svelte = require('svelte/compiler');
 const path = require('path');
 
 /**
+ * Check if current AST node contains __ method call with specified name
+ * @param {Object} node - AST node
+ * @param {string} methodName - name of __ method
+ * @returns {boolean}
+ */
+function checkIfI18nMethodCall (node, methodName) {
+    return node.callee && node.callee.object && node.callee.object.name === '__' &&
+        node.callee.property && node.callee.property.name === methodName;
+}
+
+/**
  * Converts the given source code into AST and returns with a set of strings wrapped in `__()`
  *
  * @param {string} fileContent - source code of the file
@@ -63,7 +74,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
 
     svelte.walk(ast, {
         enter(node) {
-            if (node.callee && node.callee.name === '__') {
+            if ((node.callee && node.callee.name === '__') || checkIfI18nMethodCall(node, 'tc')) {
                 svelte.walk(node, {
                     enter() {
                         const { type, value } = node.arguments[0];
@@ -76,7 +87,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                         } else {
                             /* eslint-disable no-console */
                             console.warn(
-                                `__ was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                                `__ method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
                             );
                         }
                         this.skip();
