@@ -2,13 +2,17 @@
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 1`] = `
 Map {
-  "Some dummy © string" => Array [
+  Object {
+    "msgid": "Some dummy © string",
+  } => Array [
     Object {
       "file": "dummy.js",
       "line": 3,
     },
   ],
-  "duplicate string" => Array [
+  Object {
+    "msgid": "duplicate string",
+  } => Array [
     Object {
       "file": "dummy.js",
       "line": 4,
@@ -18,10 +22,26 @@ Map {
       "line": 5,
     },
   ],
-  "Plural form string" => Array [
+  Object {
+    "msgid": "Key",
+    "msgid_plural": "Plural key",
+  } => Array [
     Object {
       "file": "dummy.js",
       "line": 6,
+    },
+  ],
+  Object {
+    "msgid": "Duplicate key",
+    "msgid_plural": "Duplicate plural key",
+  } => Array [
+    Object {
+      "file": "dummy.js",
+      "line": 7,
+    },
+    Object {
+      "file": "dummy.js",
+      "line": 8,
     },
   ],
 }
@@ -29,31 +49,42 @@ Map {
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 2`] = `
 Map {
-  "All work is done!" => Array [
+  Object {
+    "msgid": "All work is done!",
+  } => Array [
     Object {
       "file": "dummy.svelte",
       "line": 28,
     },
   ],
-  "You have no more pending tasks for now!" => Array [
+  Object {
+    "msgid": "You have no more pending tasks for now!",
+  } => Array [
     Object {
       "file": "dummy.svelte",
       "line": 29,
     },
   ],
-  "Logout" => Array [
+  Object {
+    "msgid": "Logout",
+  } => Array [
     Object {
       "file": "dummy.svelte",
       "line": 30,
     },
   ],
-  "Plural translation" => Array [
+  Object {
+    "msgid": "Key",
+    "msgid_plural": "Plural key",
+  } => Array [
     Object {
       "file": "dummy.svelte",
       "line": 31,
     },
   ],
-  "More dummy strings" => Array [
+  Object {
+    "msgid": "More dummy strings",
+  } => Array [
     Object {
       "file": "dummy.svelte",
       "line": 2,

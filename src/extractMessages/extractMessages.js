@@ -74,7 +74,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
 
     svelte.walk(ast, {
         enter(node) {
-            if ((node.callee && node.callee.name === '__') || checkIfI18nMethodCall(node, 'tc')) {
+            if (node.callee && node.callee.name === '__') {
                 svelte.walk(node, {
                     enter() {
                         const { type, value } = node.arguments[0];
@@ -83,12 +83,37 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                             line: node.loc.start.line
                         };
                         if (type === 'Literal') {
-                            strings.set(value, [...(strings.get(value) || []), context]);
+                            const key = [...strings.keys()].find((item) => item.msgid === value) || { msgid: value };
+                            strings.set(key, [...(strings.get(key) || []), context]);
                         } else {
                             /* eslint-disable no-console */
                             console.warn(
                                 `__ method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
                             );
+                        }
+                        this.skip();
+                    }
+                });
+            } else if (checkIfI18nMethodCall(node, 'p')) {
+                svelte.walk(node, {
+                    enter() {
+                        const [singularKey, pluralKey] = node.arguments;
+                        const context = {
+                            file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
+                            line: node.loc.start.line
+                        };
+
+                        if (singularKey.type !== 'Literal' || pluralKey.type !== 'Literal') {
+                            console.warn(
+                                `__ method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                            );
+                        } else {
+                            const key = [...strings.keys()].find((item) => item.msgid === singularKey.value) ||
+                                {
+                                    msgid: singularKey.value,
+                                    msgid_plural: pluralKey.value
+                                };
+                            strings.set(key, [...(strings.get(key) || []), context]);
                         }
                         this.skip();
                     }
