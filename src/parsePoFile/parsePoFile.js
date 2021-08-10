@@ -1,6 +1,22 @@
 const pofile = require('pofile');
 
-module.exports = function parsePoFile (content) {
+/**
+ * @param {String} content - .po file content as string
+ * @returns {Object} - translations object, in following format:
+ * ```
+ * {
+ *   "<msgctxt>.<msgid>": "message",
+ *   "<msgctxt>.<msgid_plural>": [
+ *      "message plural form 1",
+ *      "message plural form 2",
+ *      ...
+ *      "message plural form n",
+ *   ]
+ * }
+ * ```
+ * where msgctxt, msgid and msgid_plural are corresponding keys from the .po file (msgcxtx is optional)
+ */
+function parsePoFile (content) {
     const { headers, items: entries } = pofile.parse(content);
 
     let [p11nRules] = headers["Plural-Forms"].match(/plural=.+/);
@@ -33,4 +49,6 @@ module.exports = function parsePoFile (content) {
         translations: JSON.stringify(result),
         p11nRules
     };
-};
+}
+
+module.exports = parsePoFile;
