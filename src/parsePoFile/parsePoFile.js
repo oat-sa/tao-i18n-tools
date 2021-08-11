@@ -22,14 +22,17 @@ const pofile = require('pofile');
  * @param {String} content - .po file content as string
  * @returns {Object} - translations object, in following format:
  * ```
- * {
- *   "<msgctxt>.<msgid>": "message",
- *   "<msgctxt>.<msgid_plural>": [
- *      "message plural form 1",
- *      "message plural form 2",
- *      ...
- *      "message plural form n",
- *   ]
+ * {  
+ *   translations: { 
+ *     "<msgctxt>.<msgid>": "message",
+ *     "<msgctxt>.<msgid_plural>": [
+ *        "message plural form 1",
+ *        "message plural form 2",
+ *        ...
+ *        "message plural form n",
+ *     ]
+ *  },
+ *  p1nnRules: "plural rules function"
  * }
  * ```
  * where msgctxt, msgid and msgid_plural are corresponding keys from the .po file (msgcxtx is optional)
