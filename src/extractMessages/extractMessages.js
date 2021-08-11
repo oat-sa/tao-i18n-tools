@@ -105,7 +105,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
 
                         if (singularKey.type !== 'Literal' || pluralKey.type !== 'Literal') {
                             console.warn(
-                                `__ method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                                `__.p method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
                             );
                         } else {
                             const key = [...strings.keys()].find((item) => item.msgid === singularKey.value) ||
