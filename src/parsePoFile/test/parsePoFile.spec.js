@@ -50,6 +50,37 @@ msgstr[0] "Plural message"
 msgstr[1] "Plural messages"
 `;
 
+const poFileExampleContentWoPluralForms = `
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+
+#: ../component/report/dropdownOptions.js:8
+msgid "SINGULAR"
+msgstr "Singular message"
+
+#: ../component/report/dropdownOptions.js:8
+msgctxt "CONTEXT"
+msgid "SINGULAR"
+msgstr "Singular message with context"
+
+#: ../component/actionForm/ActionForm.svelte:278
+#: ../component/actionForm/ActionForm.svelte:279
+msgid "PLURAL_MESSAGE"
+msgid_plural "PLURAL_MESSAGES"
+msgstr[0] "Plural message"
+msgstr[1] "Plural messages"
+`;
+
 describe('correctly parses .po files', () => {
     it('correctly parses messages into JSON', () => {
         const { translations } = parsePoFile(poFileExampleContent);
@@ -68,6 +99,11 @@ describe('correctly parses .po files', () => {
     it('extracts p11nRules function as string from .po file content', () => {
         const { p11nRules } = parsePoFile(poFileExampleContent);
         expect(p11nRules).toBe('(n)=>(n != 1);');
+    });
+
+    it('falls back to default implementation of p11nRules if Plural-Forms header is missing', () => {
+        const { p11nRules } = parsePoFile(poFileExampleContentWoPluralForms);
+        expect(p11nRules).toBe('()=>0');
     });
 });
 

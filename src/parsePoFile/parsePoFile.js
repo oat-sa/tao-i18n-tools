@@ -22,8 +22,8 @@ const pofile = require('pofile');
  * @param {String} content - .po file content as string
  * @returns {Object} - translations object, in following format:
  * ```
- * {  
- *   translations: { 
+ * {
+ *   translations: {
  *     "<msgctxt>.<msgid>": "message",
  *     "<msgctxt>.<msgid_plural>": [
  *        "message plural form 1",
@@ -40,7 +40,7 @@ const pofile = require('pofile');
 function parsePoFile (content) {
     const { headers, items: entries } = pofile.parse(content);
 
-    let [p11nRules] = headers["Plural-Forms"].match(/plural=.+/);
+    let [p11nRules] = headers["Plural-Forms"].match(/plural=.+/) || ['()=>0'];
     p11nRules = p11nRules.replace('plural=', '(n)=>');
 
     const result = entries.reduce((accumulator, currentEntry) => {
