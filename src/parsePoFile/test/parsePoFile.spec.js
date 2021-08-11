@@ -1,4 +1,4 @@
-const parsePoFile = require('../parsePoFile');
+const parsePoFile = require('../parsePoFile.js');
 const poFileExampleContent = `
 msgid ""
 msgstr ""
