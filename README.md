@@ -33,7 +33,32 @@ $ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 
 ## Transform PO files to modules
 
-`po2i18n` transforms PO files to modules which are exporting dictionary and pluralization rules for given locale.
+`po2i18n` plugin transforms PO files to modules which are exporting dictionary and pluralization rules for given locale.
+
+### Usage
+
+```js
+import po2i18n from '@oat-sa/tao-i18n-tools/src/rollup/po2i18n';
+
+export default {
+    plugins: [
+        po2i18n({
+            exclude: ['**/node_modules/**']
+        }),
+        svelte(),
+        babel()
+    ]
+};
+```
+
+And then in application code we can just use an import:
+
+```js
+import locale from 'path/to/po/file.po';
+
+console.log(locale.default); // translations
+console.log(locale.p11nRules); // pluralization rules
+```
 
 ## Rollup plugin
 
