@@ -31,11 +31,41 @@ $ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 
 > :warning: **Relative paths are not supported**: please use absolute path for source and destination argument.
 
+## Transform PO files to modules
+
+`po2i18n` plugin transforms PO files to modules which are exporting dictionary and pluralization rules for given locale.
+
+### Usage
+
+```js
+import po2i18n from '@oat-sa/tao-i18n-tools/src/rollup/po2i18n';
+
+export default {
+    plugins: [
+        po2i18n({
+            exclude: ['**/node_modules/**']
+        }),
+        svelte(),
+        babel()
+    ]
+};
+```
+
+And then in application code we can just use an import:
+
+```js
+import locale from 'path/to/po/file.po';
+
+console.log(locale.default); // translations
+console.log(locale.p11nRules); // pluralization rules
+```
+
 ## Rollup plugin
 
 ```js
 import path from 'path';
 import i18n from '@oat-sa/tao-i18n-tools/src/rollup/i18n';
+import po2i18n from '@oat-sa/tao-i18n-tools/src/rollup/po2i18n';
 
 export default {
     plugins: [
@@ -43,6 +73,9 @@ export default {
             exclude: ['**/node_modules/**'],
             include: ['**/@oat-sa-private/**', '**/@oat-sa/**'],
             output: path.join(srcDir, 'locales', 'messages.pot')
+        }),
+        po2i18n({
+            exclude: ['**/node_modules/**']
         }),
         // i18n plugin should be above any code transform plugin like babel or svelte
         svelte(),

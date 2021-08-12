@@ -34,8 +34,8 @@ jest.mock('fs', function() {
 });
 
 const i18n = require('../i18n.js');
-const extractMessages = require('../../extractMessages/extractMessages');
-const generatePOT = require('../../generatePOT/generatePOT');
+const extractMessages = require('../../extractMessages/extractMessages.js');
+const generatePOT = require('../../generatePOT/generatePOT.js');
 const fs = require('fs');
 
 describe('i18n rollup API', () => {

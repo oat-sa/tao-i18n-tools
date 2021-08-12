@@ -11,5 +11,9 @@ msgstr \\"\\"
 #: ../../src/bootstrap.js:22
 msgid \\"Logout\\"
 msgstr \\"\\"
+#: ../../src/bootstrap.js:12
+msgid \\"Remove test\\"
+msgid_plural \\"Remove tests\\"
+msgstr[0] \\"\\"
 "
 `;
