@@ -21,16 +21,20 @@
  * Writes the strings to POT file
  *
  * Skips the duplicate strings
- * @param {Map<string, Object[]}
+ * @param {Map<Object, Object[]}
  * @returns {string}
  */
 module.exports = function generatePOT(strings) {
     let potContent = '';
 
-    strings.forEach((contexts, string) => {
+    strings.forEach((contexts, meta) => {
         const messageContext = contexts.map(context => `#: ${context.file}:${context.line}`).join('\n');
+        const metaString = Object.keys(meta).reduce((accumulator, key) => {
+            accumulator += `${key} "${meta[key]}"\n`;
+            return accumulator;
+        }, '');
 
-        potContent += `${messageContext}\nmsgid "${string}"\nmsgstr ""\n`;
+        potContent += `${messageContext}\n${metaString}msgstr${meta.msgid_plural ? '[0]' : ''} ""\n`;
     });
 
     return potContent;

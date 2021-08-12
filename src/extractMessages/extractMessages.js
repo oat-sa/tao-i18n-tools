@@ -21,6 +21,17 @@ const svelte = require('svelte/compiler');
 const path = require('path');
 
 /**
+ * Check if current AST node contains __ method call with specified name
+ * @param {Object} node - AST node
+ * @param {string} methodName - name of __ method
+ * @returns {boolean}
+ */
+function checkIfI18nMethodCall (node, methodName) {
+    return node.callee && node.callee.object && node.callee.object.name === '__' &&
+        node.callee.property && node.callee.property.name === methodName;
+}
+
+/**
  * Converts the given source code into AST and returns with a set of strings wrapped in `__()`
  *
  * @param {string} fileContent - source code of the file
@@ -72,12 +83,37 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                             line: node.loc.start.line
                         };
                         if (type === 'Literal') {
-                            strings.set(value, [...(strings.get(value) || []), context]);
+                            const key = [...strings.keys()].find((item) => item.msgid === value) || { msgid: value };
+                            strings.set(key, [...(strings.get(key) || []), context]);
                         } else {
                             /* eslint-disable no-console */
                             console.warn(
-                                `__ was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                                `__ method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
                             );
+                        }
+                        this.skip();
+                    }
+                });
+            } else if (checkIfI18nMethodCall(node, 'p')) {
+                svelte.walk(node, {
+                    enter() {
+                        const [singularKey, pluralKey] = node.arguments;
+                        const context = {
+                            file: relativeTo ? path.relative(relativeTo, fileName) : fileName,
+                            line: node.loc.start.line
+                        };
+
+                        if (singularKey.type !== 'Literal' || pluralKey.type !== 'Literal') {
+                            console.warn(
+                                `__.p method was called with an unextractable non literal parameter at ${context.file}:${context.line}`
+                            );
+                        } else {
+                            const key = [...strings.keys()].find((item) => item.msgid === singularKey.value) ||
+                                {
+                                    msgid: singularKey.value,
+                                    msgid_plural: pluralKey.value
+                                };
+                            strings.set(key, [...(strings.get(key) || []), context]);
                         }
                         this.skip();
                     }

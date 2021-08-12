@@ -23,12 +23,30 @@ let strings;
 
 beforeAll(() => {
     strings = new Map([
-        ['All work is done!', [{ file: 'index.js', line: 13 }]],
         [
-            'You have no more pending tasks for now!',
+            {
+                msgid: 'All work is done!'
+            },
+            [{ file: 'index.js', line: 13 }]],
+        [
+            {
+                msgid: 'You have no more pending tasks for now!',
+            },
             [{ file: '../src/controller/runner.js', line: 31 }, { file: '../src/controller/runner.js', line: 45 }]
         ],
-        ['Logout', [{ file: '../../src/bootstrap.js', line: 22 }]]
+        [
+            {
+                msgid: 'Logout'
+            },
+            [{ file: '../../src/bootstrap.js', line: 22 }]
+        ],
+        [
+            {
+                msgid: 'Remove test',
+                msgid_plural: 'Remove tests'
+            },
+            [{ file: '../../src/bootstrap.js', line: 12 }]
+        ]
     ]);
 });
 
