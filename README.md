@@ -31,6 +31,10 @@ $ i18n:extract -s /absolute/path/to/src -d /absolute/path/to/template.POT
 
 > :warning: **Relative paths are not supported**: please use absolute path for source and destination argument.
 
+## Transform PO files to modules
+
+`po2i18n` transforms PO files to modules which are exporting dictionary and pluralization rules for given locale.
+
 ## Rollup plugin
 
 ```js
