@@ -30,6 +30,17 @@ module.exports = function generatePOT(strings) {
     const msgids = new Set(); // avoids duplicates
     const msgid_plurals = new Set();
 
+    const getPotHeader = () =>
+`msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Language: en\\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+"POT-Creation-Date: ${new Date().toISOString().slice(0,16).replace('T',' ')}\\n"
+"X-Generator: tao-i18n-tools\\n"
+
+`;
+
     strings.forEach((contexts, meta) => {
         const messageContext = contexts.map(context => `#: ${context.file}:${context.line}`).join('\n');
         const metaString = Object.keys(meta).reduce((accumulator, key) => {
@@ -49,5 +60,5 @@ module.exports = function generatePOT(strings) {
         }
     });
 
-    return potContent;
+    return getPotHeader() + potContent;
 };
