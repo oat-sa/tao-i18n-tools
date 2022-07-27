@@ -81,6 +81,14 @@ describe('API', () => {
 });
 
 describe('generatePOT', () => {
+    beforeEach(() => {
+        const start = new Date('2022-07-27');
+        jest.spyOn(global, 'Date').mockImplementation(() => start);
+    });
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('should return right POT content', function() {
         const generatePotContent = generatePOT(strings);
 

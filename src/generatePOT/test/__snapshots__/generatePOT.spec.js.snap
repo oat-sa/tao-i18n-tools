@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generatePOT should return right POT content 1`] = `
-"#: index.js:13
+"msgid \\"\\"
+msgstr \\"\\"
+\\"Content-Type: text/plain; charset=UTF-8\\\\n\\"
+\\"Language: en\\\\n\\"
+\\"Plural-Forms: nplurals=2; plural=(n != 1);\\\\n\\"
+\\"POT-Creation-Date: 2022-07-27 00:00\\\\n\\"
+\\"X-Generator: tao-i18n-tools\\\\n\\"
+
+#: index.js:13
 msgid \\"All work is done!\\"
 msgstr \\"\\"
 #: ../src/controller/runner.js:31
