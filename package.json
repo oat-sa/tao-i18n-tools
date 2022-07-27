@@ -8,7 +8,8 @@
     "scripts": {
         "extract": "node ./bin/extractTranslations.js",
         "lint": "eslint -c .eslintrc.js --ext js .",
-        "test": "jest"
+        "test": "jest",
+        "test:update": "jest -u"
     },
     "repository": {
         "type": "git",
