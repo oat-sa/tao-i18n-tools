@@ -83,7 +83,8 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                             line: node.loc.start.line
                         };
                         if (type === 'Literal') {
-                            const key = [...strings.keys()].find((item) => item.msgid === value) || { msgid: value };
+                            const escapedValue = value.replace(/["]/g, '\\"');
+                            const key = [...strings.keys()].find((item) => item.msgid === escapedValue) || { msgid: escapedValue };
                             strings.set(key, [...(strings.get(key) || []), context]);
                         } else {
                             /* eslint-disable no-console */
