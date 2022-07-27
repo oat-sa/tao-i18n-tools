@@ -15,5 +15,13 @@ msgstr \\"\\"
 msgid \\"Remove test\\"
 msgid_plural \\"Remove tests\\"
 msgstr[0] \\"\\"
+#: ../../src/bootstrap-duplicates.js:123
+msgid \\"Remove test\\"
+msgid_plural \\"Remove the tests\\"
+msgstr[0] \\"\\"
+#: ../../src/bootstrap-duplicates.js:1234
+msgid \\"Remove a test\\"
+msgid_plural \\"Remove tests\\"
+msgstr[0] \\"\\"
 "
 `;
