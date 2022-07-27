@@ -37,7 +37,7 @@ function checkIfI18nMethodCall (node, methodName) {
  * @param {string} fileContent - source code of the file
  * @param {string} fileName - Name of the file
  * @param {string} [relativeTo] - File context will be relative to this path
- * @returns {Map<string, Object[]>}
+ * @returns {Map<Object, Object[]>}
  */
 module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
