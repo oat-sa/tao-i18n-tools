@@ -30,13 +30,18 @@ module.exports = function generatePOT(strings) {
     const msgids = new Set(); // avoids duplicates
     const msgid_plurals = new Set();
 
-    const getPotHeader = () =>
-`msgid ""
+    const getPotHeader = () => `msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\\n"
-"Language: en\\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+"Project-Id-Version: \\n"
 "POT-Creation-Date: ${new Date().toISOString().slice(0,16).replace('T',' ')}\\n"
+"PO-Revision-Date: \\n"
+"Last-Translator: \\n"
+"Language-Team: \\n"
+"Language: en\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
 "X-Generator: tao-i18n-tools\\n"
 
 `;
