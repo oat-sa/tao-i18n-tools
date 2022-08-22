@@ -6,5 +6,6 @@ export default () => {
         const string4 = __.p('Key', 'Plural key', 5);
         const string5 = __.p('Duplicate key', 'Duplicate plural key', 5);
         const string6 = __.p('Duplicate key', 'Duplicate plural key', 7);
+        const string7 = __('string with "double quotes" inside');
     };
 };

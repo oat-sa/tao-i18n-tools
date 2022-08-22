@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2020 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA
  *
  */
 
@@ -37,7 +37,7 @@ function checkIfI18nMethodCall (node, methodName) {
  * @param {string} fileContent - source code of the file
  * @param {string} fileName - Name of the file
  * @param {string} [relativeTo] - File context will be relative to this path
- * @returns {Map<string, Object[]>}
+ * @returns {Map<Object, Object[]>}
  */
 module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     const fileExt = path.extname(fileName);
@@ -83,7 +83,8 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                             line: node.loc.start.line
                         };
                         if (type === 'Literal') {
-                            const key = [...strings.keys()].find((item) => item.msgid === value) || { msgid: value };
+                            const escapedValue = value.replace(/["]/g, '\\"');
+                            const key = [...strings.keys()].find((item) => item.msgid === escapedValue) || { msgid: escapedValue };
                             strings.set(key, [...(strings.get(key) || []), context]);
                         } else {
                             /* eslint-disable no-console */

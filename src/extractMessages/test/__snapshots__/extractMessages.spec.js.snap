@@ -44,6 +44,14 @@ Map {
       "line": 8,
     },
   ],
+  Object {
+    "msgid": "string with \\\\\\"double quotes\\\\\\" inside",
+  } => Array [
+    Object {
+      "file": "dummy.js",
+      "line": 9,
+    },
+  ],
 }
 `;
 
