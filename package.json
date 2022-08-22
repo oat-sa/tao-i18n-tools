@@ -36,7 +36,7 @@
         "glob": "^7.1.6",
         "minimatch": "^3.0.4",
         "pofile": "^1.1.1",
-        "svelte": "3.32.3"
+        "svelte": "3.49.0"
     },
     "devDependencies": {
         "@oat-sa/eslint-config-tao": "^0.1.0",
