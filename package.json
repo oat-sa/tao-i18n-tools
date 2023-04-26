@@ -8,7 +8,10 @@
     "scripts": {
         "extract": "node ./bin/extractTranslations.js",
         "lint": "eslint -c .eslintrc.js --ext js .",
+        "lint:report": "eslint -c .eslintrc.js --ext js --output-file eslint_report.json --format json .",
         "test": "jest",
+        "test:cov": "npm test -- --coverage",
+        "test:cov:ci": "npm test -- --coverage --runInBand",
         "test:update": "jest -u"
     },
     "repository": {
