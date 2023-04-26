@@ -18,7 +18,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const minimatch = require('minimatch');
+const { minimatch } = require('minimatch');
 const extractMessages = require('../extractMessages/extractMessages');
 const generatePOT = require('../generatePOT/generatePOT');
 
