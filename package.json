@@ -42,9 +42,9 @@
         "@oat-sa/eslint-config-tao": "^2.0.0",
         "@oat-sa/prettier-config": "^0.1.1",
         "eslint": "^8.39.0",
-        "eslint-plugin-jest": "^23.8.2",
+        "eslint-plugin-jest": "^27.2.1",
         "eslint-plugin-jsdoc": "^40.1.1",
-        "jest": "^25.1.0"
+        "jest": "^29.5.0"
     },
     "prettier": "@oat-sa/prettier-config"
 }
