@@ -34,7 +34,7 @@
         "node": ">=10.0.0"
     },
     "dependencies": {
-        "@rollup/pluginutils": "^4.1.0",
+        "@rollup/pluginutils": "^5.0.2",
         "commander": "^4.1.1",
         "glob": "^7.2.3",
         "minimatch": "^9.0.0",
