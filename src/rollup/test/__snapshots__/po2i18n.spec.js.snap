@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`correclty handles po files returns string with module containing translations as object and p11nRules as function 1`] = `"export default {\\"SINGULAR\\":\\"Singular message\\",\\"CONTEXT.SINGULAR\\":\\"Singular message with context\\",\\"PLURAL_MESSAGE\\":\\"Plural message\\",\\"PLURAL_MESSAGES\\":[\\"Plural message\\",\\"Plural messages\\"]}; export const p11nRules = (n)=>(n != 1);"`;
+exports[`correclty handles po files returns string with module containing translations as object and p11nRules as function 1`] = `"export default {"SINGULAR":"Singular message","CONTEXT.SINGULAR":"Singular message with context","PLURAL_MESSAGE":"Plural message","PLURAL_MESSAGES":["Plural message","Plural messages"]}; export const p11nRules = (n)=>(n != 1);"`;

@@ -2,52 +2,52 @@
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 1`] = `
 Map {
-  Object {
+  {
     "msgid": "Some dummy © string",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.js",
       "line": 3,
     },
   ],
-  Object {
+  {
     "msgid": "duplicate string",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.js",
       "line": 4,
     },
-    Object {
+    {
       "file": "dummy.js",
       "line": 5,
     },
   ],
-  Object {
+  {
     "msgid": "Key",
     "msgid_plural": "Plural key",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.js",
       "line": 6,
     },
   ],
-  Object {
+  {
     "msgid": "Duplicate key",
     "msgid_plural": "Duplicate plural key",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.js",
       "line": 7,
     },
-    Object {
+    {
       "file": "dummy.js",
       "line": 8,
     },
   ],
-  Object {
-    "msgid": "string with \\\\\\"double quotes\\\\\\" inside",
-  } => Array [
-    Object {
+  {
+    "msgid": "string with \\"double quotes\\" inside",
+  } => [
+    {
       "file": "dummy.js",
       "line": 9,
     },
@@ -57,43 +57,43 @@ Map {
 
 exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 2`] = `
 Map {
-  Object {
+  {
     "msgid": "All work is done!",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.svelte",
       "line": 28,
     },
   ],
-  Object {
+  {
     "msgid": "You have no more pending tasks for now!",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.svelte",
       "line": 29,
     },
   ],
-  Object {
+  {
     "msgid": "Logout",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.svelte",
       "line": 30,
     },
   ],
-  Object {
+  {
     "msgid": "Key",
     "msgid_plural": "Plural key",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.svelte",
       "line": 31,
     },
   ],
-  Object {
+  {
     "msgid": "More dummy strings",
-  } => Array [
-    Object {
+  } => [
+    {
       "file": "dummy.svelte",
       "line": 2,
     },
