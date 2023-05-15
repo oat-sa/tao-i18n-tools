@@ -1,6 +1,6 @@
 {
     "name": "@oat-sa/tao-i18n-tools",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Internationalisation tools for tao",
     "bin": {
         "i18n:extract": "./bin/extractTranslations.js"
@@ -8,7 +8,10 @@
     "scripts": {
         "extract": "node ./bin/extractTranslations.js",
         "lint": "eslint -c .eslintrc.js --ext js .",
+        "lint:report": "eslint -c .eslintrc.js --ext js --output-file eslint_report.json --format json .",
         "test": "jest",
+        "test:cov": "npm test -- --coverage",
+        "test:cov:ci": "npm test -- --coverage --runInBand",
         "test:update": "jest -u"
     },
     "repository": {
@@ -33,18 +36,17 @@
     "dependencies": {
         "@rollup/pluginutils": "^4.1.0",
         "commander": "^4.1.1",
-        "glob": "^7.1.6",
-        "minimatch": "^3.0.4",
-        "pofile": "^1.1.1",
+        "glob": "^7.2.3",
+        "minimatch": "^9.0.0",
+        "pofile": "^1.1.4",
         "svelte": "3.32.3"
     },
     "devDependencies": {
-        "@oat-sa/eslint-config-tao": "^0.1.0",
+        "@oat-sa/eslint-config-tao": "^2.0.0",
         "@oat-sa/prettier-config": "^0.1.1",
-        "eslint": "^6.8.0",
-        "eslint-plugin-jest": "^23.8.2",
-        "eslint-plugin-jsdoc": "^22.0.1",
-        "jest": "^25.1.0"
+        "eslint": "^8.39.0",
+        "jest": "^29.5.0",
+        "prettier": "^2.8.8"
     },
     "prettier": "@oat-sa/prettier-config"
 }
