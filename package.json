@@ -35,7 +35,7 @@
     },
     "dependencies": {
         "@rollup/pluginutils": "^4.1.0",
-        "commander": "^4.1.1",
+        "commander": "^11.0.0",
         "glob": "^7.2.3",
         "minimatch": "^9.0.0",
         "pofile": "^1.1.4",
