@@ -1,6 +1,6 @@
 {
     "name": "@oat-sa/tao-i18n-tools",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "Internationalisation tools for tao",
     "bin": {
         "i18n:extract": "./bin/extractTranslations.js"
@@ -31,7 +31,7 @@
     },
     "homepage": "https://github.com/oat-sa/tao-i18n-tools#readme",
     "engines": {
-        "node": ">=10.0.0"
+        "node": ">=18.0.0"
     },
     "dependencies": {
         "@rollup/pluginutils": "^4.1.0",
