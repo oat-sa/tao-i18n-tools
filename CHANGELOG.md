@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
--   Updated Svelte to v5
+-   Updated Svelte to v5.20.4
 
 ## [0.6.0] - 06-03-2024
 
