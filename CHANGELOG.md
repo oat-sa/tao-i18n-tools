@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
--   Updated test to verify that svelte parsing works for versions 3/4 and 5
+-   Updated test to verify that Svelte parsing works for Svelte source files version 3/4 and for Svelte source files version 5 with runes
 
 ## [0.7.0] - 11-03-2025
 
