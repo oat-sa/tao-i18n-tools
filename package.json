@@ -34,7 +34,7 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "@rollup/pluginutils": "^4.1.0",
+        "@rollup/pluginutils": "^5.1.4",
         "commander": "^4.1.1",
         "estree-walker": "^2.0.2",
         "glob": "^7.2.3",
