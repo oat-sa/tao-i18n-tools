@@ -23,32 +23,39 @@ const path = require('path');
 
 let jsFileContent;
 let svelteFileContent;
+let svelte5FileContent;
 
 beforeAll(() =>
     Promise.all([
         fs.readFile(path.join(__dirname, 'data', 'dummy.js'), 'utf8').then(src => (jsFileContent = src)),
-        fs.readFile(path.join(__dirname, 'data', 'dummy.svelte'), 'utf8').then(src => (svelteFileContent = src))
+        fs.readFile(path.join(__dirname, 'data', 'dummy.svelte'), 'utf8').then(src => (svelteFileContent = src)),
+        fs
+            .readFile(path.join(__dirname, 'data', 'dummy-svelte5.svelte'), 'utf8')
+            .then(src => (svelte5FileContent = src))
     ])
 );
 
 describe('API', () => {
-    it('should exist', function() {
+    it('should exist', function () {
         expect(extractMessages).toBeDefined;
     });
 
-    it('should be a function', function() {
+    it('should be a function', function () {
         expect(extractMessages).toBeInstanceOf(Function);
     });
 });
 
 describe('extractMessages returns right number of messages with JavaScript and Svelte files', () => {
-    it('should return a set of stings', function() {
+    it('should return a set of stings', function () {
         const strings = extractMessages(jsFileContent, 'dummy.js');
         const strings2 = extractMessages(svelteFileContent, 'dummy.svelte');
+        const strings3 = extractMessages(svelte5FileContent, 'dummy-svelte5.svelte');
 
         expect(strings).toBeInstanceOf(Map);
         expect(strings).toMatchSnapshot();
         expect(strings2).toBeInstanceOf(Map);
         expect(strings2).toMatchSnapshot();
+        expect(strings3).toBeInstanceOf(Map);
+        expect(strings3).toMatchSnapshot();
     });
 });

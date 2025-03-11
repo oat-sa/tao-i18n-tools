@@ -100,3 +100,49 @@ Map {
   ],
 }
 `;
+
+exports[`extractMessages returns right number of messages with JavaScript and Svelte files should return a set of stings 3`] = `
+Map {
+  {
+    "msgid": "All work is done!",
+  } => [
+    {
+      "file": "dummy-svelte5.svelte",
+      "line": 12,
+    },
+  ],
+  {
+    "msgid": "You have no more pending tasks for now!",
+  } => [
+    {
+      "file": "dummy-svelte5.svelte",
+      "line": 13,
+    },
+  ],
+  {
+    "msgid": "Logout",
+  } => [
+    {
+      "file": "dummy-svelte5.svelte",
+      "line": 18,
+    },
+  ],
+  {
+    "msgid": "Key",
+    "msgid_plural": "Plural key",
+  } => [
+    {
+      "file": "dummy-svelte5.svelte",
+      "line": 19,
+    },
+  ],
+  {
+    "msgid": "Svelte 5 dummy string",
+  } => [
+    {
+      "file": "dummy-svelte5.svelte",
+      "line": 2,
+    },
+  ],
+}
+`;
