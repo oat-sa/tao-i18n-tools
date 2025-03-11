@@ -13,11 +13,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2020-2025 (original work) Open Assessment Technologies SA
  *
  */
 
-const svelte = require('svelte/compiler');
+const { parse } = require('svelte/compiler');
+const { walk } = require('estree-walker');
 const path = require('path');
 
 /**
@@ -26,7 +27,7 @@ const path = require('path');
  * @param {string} methodName - name of __ method
  * @returns {boolean}
  */
-function checkIfI18nMethodCall (node, methodName) {
+function checkIfI18nMethodCall(node, methodName) {
     return node.callee && node.callee.object && node.callee.object.name === '__' &&
         node.callee.property && node.callee.property.name === methodName;
 }
@@ -45,12 +46,12 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
     let ast;
 
     /**
-     * Wrap JS file content in a script tag before parsing it because svelte.parse expects a valid svelte component
+     * Wrap JS file content in a script tag before parsing it because parse expects a valid svelte component
      *
      * If the fileContent is from a svelte component, remove <style> tag before converting to AST because svelte can not parse postCSS
      */
     if (fileExt === '.js') {
-        ast = svelte.parse(`<script>${fileContent}</script>`);
+        ast = parse(`<script>${fileContent}</script>`);
     } else if (fileExt === '.svelte') {
         /**
          * Style tag should be removed, because it can contain scss or postcss, what cannot be parsed without extra plugin.
@@ -69,13 +70,13 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
             source = source.replace(re, new Array(removedLines).join('\n'));
         });
 
-        ast = svelte.parse(source);
+        ast = parse(source);
     }
 
-    svelte.walk(ast, {
+    walk(ast, {
         enter(node) {
             if (node.callee && node.callee.name === '__') {
-                svelte.walk(node, {
+                walk(node, {
                     enter() {
                         const { type, value } = node.arguments[0];
                         const context = {
@@ -96,7 +97,7 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                     }
                 });
             } else if (checkIfI18nMethodCall(node, 'p')) {
-                svelte.walk(node, {
+                walk(node, {
                     enter() {
                         const [singularKey, pluralKey] = node.arguments;
                         const context = {
@@ -110,10 +111,10 @@ module.exports = function extractMessages(fileContent, fileName, relativeTo) {
                             );
                         } else {
                             const key = [...strings.keys()].find((item) => item.msgid === singularKey.value) ||
-                                {
-                                    msgid: singularKey.value,
-                                    msgid_plural: pluralKey.value
-                                };
+                            {
+                                msgid: singularKey.value,
+                                msgid_plural: pluralKey.value
+                            };
                             strings.set(key, [...(strings.get(key) || []), context]);
                         }
                         this.skip();
