@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 05-03-2025
+## [0.7.1] - 11-03-2025
+
+### Changed
+
+-   Updated test to verify that svelte parsing works for versions 3/4 and 5
+
+## [0.7.0] - 11-03-2025
 
 ### Changed
 
