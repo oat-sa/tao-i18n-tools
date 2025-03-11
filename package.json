@@ -38,7 +38,7 @@
         "commander": "^4.1.1",
         "estree-walker": "^2.0.2",
         "glob": "^7.2.3",
-        "minimatch": "^9.0.0",
+        "minimatch": "^10.0.1",
         "pofile": "^1.1.4",
         "svelte": "^5.20.4"
     },
